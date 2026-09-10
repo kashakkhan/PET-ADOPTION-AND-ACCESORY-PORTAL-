@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kashak Pet's World | Premium Pet Supplies & Grooming</title>
+
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+   
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#ffedd5', // Orange 100
+                            DEFAULT: '#f97316', // Orange 500
+                            dark: '#c2410c', // Orange 700
+                        },
+                        accent: '#1e293b' // Slate 800
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 50;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- 
+      ADVANCED JAVA INTEGRATION NOTE: 
+      If using Spring Security, inject authenticated user state here.
+      e.g., <sec:authorize access="isAuthenticated()"> ... </sec:authorize>
+    -->
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center gap-2">
+                        <i class="fa-solid fa-paw text-brand text-3xl"></i>
+                        <span class="font-bold text-2xl text-accent">Kashak <span class="text-brand">Pet's
+                                World</span></span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-600 hover:text-brand font-medium transition">Home</a>
+                    <a href="#services" class="text-gray-600 hover:text-brand font-medium transition">Services</a>
+                    <a href="#products" class="text-gray-600 hover:text-brand font-medium transition">Shop</a>
+                    <a href="#reviews" class="text-gray-600 hover:text-brand font-medium transition">Reviews</a>
+                    <a href="#contact" class="text-gray-600 hover:text-brand font-medium transition">Contact</a>
+
+                    <!-- Cart Action (Form submission to Servlet/Controller) -->
+                    <button onclick="showToast('Redirecting to Cart... (Java Endpoint: /cart.do)')"
+                        class="relative text-gray-600 hover:text-brand transition">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span
+                            class="absolute -top-2 -right-2 bg-brand text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+
+                    <button onclick="showToast('Login Modal/Page (Java Endpoint: /login.jsp)')"
+                        class="text-gray-600 hover:text-brand font-medium transition">
+                        Sign In
+                    </button>
+
+                    <button onclick="showToast('Sign Up Modal/Page (Java Endpoint: /signup.jsp)')"
+                        class="bg-brand text-white px-5 py-2 rounded-full font-medium hover:bg-brand-dark transition shadow-lg shadow-orange-500/30">
+                        Sign Up
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-brand focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand hover:bg-gray-50 rounded-md">Home</a>
+                <a href="#services"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand hover:bg-gray-50 rounded-md">Services</a>
+                <a href="#products"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand hover:bg-gray-50 rounded-md">Shop</a>
+                <a href="#contact"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand hover:bg-gray-50 rounded-md">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-brand-light overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div
+                class="relative z-10 pb-8 bg-brand-light sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 pt-20">
+                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div class="sm:text-center lg:text-left">
+                        <span
+                            class="inline-block py-1 px-3 rounded-full bg-orange-100 text-brand-dark text-sm font-semibold tracking-wider mb-4 border border-orange-200">
+                            #1 PET STORE IN GREATER NOIDA
+                        </span>
+                        <h1 class="text-4xl tracking-tight font-extrabold text-accent sm:text-5xl md:text-6xl">
+                            <span class="block xl:inline">Everything your pet</span>
+                            <span class="block text-brand">needs to be happy.</span>
+                        </h1>
+                        <p
+                            class="mt-3 text-base text-gray-600 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                            From premium nutrition to professional grooming, Kashak Pet's World is your one-stop
+                            destination for complete pet care. Give your furry friends the love they deserve.
+                        </p>
+                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                            <div class="rounded-full shadow-lg shadow-orange-500/30">
+                                <a href="#products"
+                                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-brand hover:bg-brand-dark md:py-4 md:text-lg md:px-10 transition">
+                                    Shop Now
+                                </a>
+                            </div>
+                            <div class="mt-3 sm:mt-0 sm:ml-3">
+                                <a href="#services"
+                                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-brand bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 shadow transition">
+                                    Book Grooming
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+            <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
+                src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                alt="Happy dog looking at camera">
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-base text-brand font-semibold tracking-wide uppercase">Our Services</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-accent sm:text-4xl">
+                    Comprehensive Care for Your Pets
+                </p>
+            </div>
+
+            <div class="mt-16">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Service 1 -->
+                    <div
+                        class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-xl transition duration-300 border border-gray-100">
+                        <div class="w-16 h-16 mx-auto bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-bowl-food text-2xl text-brand"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-accent mb-3">Premium Pet Food</h3>
+                        <p class="text-gray-600">Top-tier nutritional brands for dogs, cats, birds, and small animals to
+                            keep them healthy and active.</p>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div
+                        class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-xl transition duration-300 border border-gray-100">
+                        <div class="w-16 h-16 mx-auto bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-scissors text-2xl text-brand"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-accent mb-3">Professional Grooming</h3>
+                        <p class="text-gray-600">Expert haircuts, bathing, nail trimming, and spa treatments. Book an
+                            appointment today!</p>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div
+                        class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-xl transition duration-300 border border-gray-100">
+                        <div class="w-16 h-16 mx-auto bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-bone text-2xl text-brand"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-accent mb-3">Toys & Accessories</h3>
+                        <p class="text-gray-600">Leashes, collars, cozy beds, and interactive toys to keep your pet
+                            entertained and comfortable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section (Simulating Dynamic Java Integration) -->
+    <section id="products" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-accent">Featured Products</h2>
+                    <p class="mt-2 text-gray-600">Handpicked supplies for your furry companions.</p>
+                </div>
+                <a href="#" class="hidden sm:block text-brand font-medium hover:text-brand-dark">View all products
+                    &rarr;</a>
+            </div>
+
+            <!-- 
+              ADVANCED JAVA NOTE: 
+              In JSP/Thymeleaf, you would loop through products here:
+              <c:forEach var="product" items="${productList}"> 
+                 ... Product Card HTML ...
+              </c:forEach>
+            -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <!-- Product 1 -->
+                <div
+                    class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 group">
+                    <div class="relative h-64 overflow-hidden bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+                            alt="Dog Food"
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div
+                            class="absolute top-3 right-3 bg-white p-2 rounded-full shadow text-gray-400 hover:text-red-500 cursor-pointer transition">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-gray-500 mb-1">DOG FOOD</div>
+                        <h3 class="font-bold text-accent text-lg mb-2">Premium Royal Kibble</h3>
+                        <div class="flex items-center mb-3">
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star-half-stroke text-yellow-400 text-sm"></i>
+                            <span class="text-xs text-gray-500 ml-2">(124)</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="font-extrabold text-xl text-accent">₹2,499</span>
+                            <button onclick="addToCart(1)"
+                                class="bg-brand text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-brand-dark transition shadow">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div
+                    class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 group">
+                    <div class="relative h-64 overflow-hidden bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1629957655360-1122a7fa7a21?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+                            alt="Cat Toy"
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-gray-500 mb-1">ACCESSORIES</div>
+                        <h3 class="font-bold text-accent text-lg mb-2">Interactive Cat Teaser</h3>
+                        <div class="flex items-center mb-3">
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <span class="text-xs text-gray-500 ml-2">(89)</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="font-extrabold text-xl text-accent">₹450</span>
+                            <button onclick="addToCart(2)"
+                                class="bg-brand text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-brand-dark transition shadow">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div
+                    class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 group">
+                    <div class="relative h-64 overflow-hidden bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+                            alt="Dog Bed"
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div
+                            class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-br-lg">
+                            SALE</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-gray-500 mb-1">BEDS & MATS</div>
+                        <h3 class="font-bold text-accent text-lg mb-2">Orthopedic Pet Bed</h3>
+                        <div class="flex items-center mb-3">
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-regular fa-star text-yellow-400 text-sm"></i>
+                            <span class="text-xs text-gray-500 ml-2">(42)</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <div>
+                                <span class="font-extrabold text-xl text-accent">₹1,899</span>
+                                <span class="text-sm text-gray-400 line-through ml-1">₹2,500</span>
+                            </div>
+                            <button onclick="addToCart(3)"
+                                class="bg-brand text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-brand-dark transition shadow">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div
+                    class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 group">
+                    <div class="relative h-64 overflow-hidden bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+                            alt="Pet Shampoo"
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-gray-500 mb-1">GROOMING</div>
+                        <h3 class="font-bold text-accent text-lg mb-2">Oatmeal Pet Shampoo</h3>
+                        <div class="flex items-center mb-3">
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                            <span class="text-xs text-gray-500 ml-2">(210)</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="font-extrabold text-xl text-accent">₹650</span>
+                            <button onclick="addToCart(4)"
+                                class="bg-brand text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-brand-dark transition shadow">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-10 text-center sm:hidden">
+                <a href="#"
+                    class="text-brand font-medium hover:text-brand-dark border border-brand rounded-full px-6 py-2 inline-block">View
+                    all products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="reviews" class="py-20 bg-accent text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold sm:text-4xl">What Pet Parents Say</h2>
+                <p class="mt-4 text-gray-300 max-w-2xl mx-auto">Don't just take our word for it. Here is what our happy
+                    customers in Greater Noida have to say about Kashak Pet's World.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-slate-700 p-8 rounded-2xl relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-slate-600 absolute top-6 left-6 z-0"></i>
+                    <div class="relative z-10">
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-200 mb-6 font-light">"Best pet store in Greater Noida! Found exactly what I
+                            needed for my Golden Retriever. The staff is super friendly and very knowledgeable about pet
+                            nutrition."</p>
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 bg-brand rounded-full flex items-center justify-center text-xl font-bold">
+                                R</div>
+                            <div>
+                                <h4 class="font-bold">Rahul Sharma</h4>
+                                <span class="text-sm text-gray-400">Dog Parent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-slate-700 p-8 rounded-2xl relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-slate-600 absolute top-6 left-6 z-0"></i>
+                    <div class="relative z-10">
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-200 mb-6 font-light">"Took my Persian cat here for grooming. They handled
+                            her with so much care and patience. She came back looking fluffy, clean, and smelling great.
+                            Highly recommend!"</p>
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center text-xl font-bold">
+                                P</div>
+                            <div>
+                                <h4 class="font-bold">Priya Verma</h4>
+                                <span class="text-sm text-gray-400">Cat Parent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-slate-700 p-8 rounded-2xl relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-slate-600 absolute top-6 left-6 z-0"></i>
+                    <div class="relative z-10">
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <p class="text-gray-200 mb-6 font-light">"They have a massive collection of toys and
+                            accessories. I always end up buying more than I planned because the quality is just that
+                            good. Great discounts too."</p>
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-xl font-bold">
+                                A</div>
+                            <div>
+                                <h4 class="font-bold">Amit Desai</h4>
+                                <span class="text-sm text-gray-400">Local Guide</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action / Booking -->
+    <section class="py-16 bg-brand">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between">
+            <div class="text-center lg:text-left mb-8 lg:mb-0">
+                <h2 class="text-3xl font-extrabold text-white">Is your pet due for a grooming session?</h2>
+                <p class="mt-2 text-orange-100 text-lg">Book an appointment online and skip the waiting line.</p>
+            </div>
+            <!-- Java Form Submission Endpoint would go here -->
+            <form class="w-full lg:w-auto flex flex-col sm:flex-row gap-3"
+                onsubmit="event.preventDefault(); showToast('Appointment requested! (Java POST to /book.action)');">
+                <input type="text" placeholder="Your Pet's Name" required
+                    class="px-5 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white/50 w-full sm:w-auto text-gray-800">
+                <button type="submit"
+                    class="bg-accent text-white px-8 py-3 rounded-full font-bold hover:bg-gray-900 transition shadow-lg">
+                    Book Now
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-white pt-16 pb-8 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+
+                <!-- Brand Info -->
+                <div>
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-paw text-brand text-2xl"></i>
+                        <span class="font-bold text-xl text-accent">Kashak Pet's World</span>
+                    </a>
+                    <p class="text-gray-500 mb-6 text-sm">Your trusted neighborhood pet store in Greater Noida offering
+                        premium supplies and loving grooming services.</p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-brand hover:text-white transition"><i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-brand hover:text-white transition"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-brand hover:text-white transition"><i
+                                class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold text-accent mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#home" class="hover:text-brand transition">Home</a></li>
+                        <li><a href="#about" class="hover:text-brand transition">About Us</a></li>
+                        <li><a href="#products" class="hover:text-brand transition">Shop Products</a></li>
+                        <li><a href="#services" class="hover:text-brand transition">Grooming Services</a></li>
+                        <li><a href="#contact" class="hover:text-brand transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="font-bold text-accent mb-6">Contact Us</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-brand"></i>
+                            <span>Greater Noida, Uttar Pradesh 201310<br>(See Maps for exact pin)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-brand"></i>
+                            <span>+91 98765 43210</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-brand"></i>
+                            <span>hello@kashakpetworld.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-bold text-accent mb-6">Newsletter</h4>
+                    <p class="text-sm text-gray-500 mb-4">Subscribe to get special offers, free giveaways, and
+                        once-in-a-lifetime deals.</p>
+                    <form onsubmit="event.preventDefault(); showToast('Subscribed to Newsletter!');"
+                        class="flex flex-col gap-2">
+                        <input type="email" placeholder="Enter your email" required
+                            class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-brand w-full">
+                        <button type="submit"
+                            class="bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-900 transition w-full">Subscribe</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-400">
+                    <!-- Java Scriptlet equivalent: <%= new java.util.Date().getYear() + 1900 %> -->
+                    &copy; <span id="year">2026</span> Kashak Pet's World. All rights reserved.
+                </p>
+                <div class="flex gap-4 text-sm text-gray-400">
+                    <a href="#" class="hover:text-brand">Privacy Policy</a>
+                    <a href="#" class="hover:text-brand">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Toast Notification Element -->
+    <div id="toast">Action recorded successfully!</div>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        const mobileLinks = menu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Toast Notification System (Replacing alert() as per best practices)
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.className = "show";
+
+            // Advance Java Note: Here you would typically trigger an AJAX call via Fetch API or Axios
+            // fetch('/api/cart/add?id=' + productId, { method: 'POST' }) ...
+
+            setTimeout(function () {
+                toast.className = toast.className.replace("show", "");
+            }, 3000);
+        }
+
+        // Add to Cart Mock Function
+        function addToCart(productId) {
+            // Simulating an AJAX call to a Java Servlet or Spring Controller
+            console.log(`[Java Backend Integration] POST /cart/add?productId=${productId}`);
+            showToast(`Added Product #${productId} to your cart!`);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+# Ignore embedded Maven binaries
+**/apache-maven-*/
+**/.maven/
+
+# Ignore compiled output
+**/target/
+*.class
+
+# Ignore IDE settings
+.vscode/
+.idea/
+*.iml
+
+# Ignore frontend artifacts
+frontend/node_modules/
+frontend/dist/
+
+# Ignore runtime logs
+*.log
+
+# Ignore local downloaded tools/artifacts
+backend/maven/
+backend/maven.zip
+temp_*.txt
