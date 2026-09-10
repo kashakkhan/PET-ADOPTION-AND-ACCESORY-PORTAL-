@@ -44,8 +44,3 @@ To make sure your database is "Advanced Java" ready, ensure you have these table
 *   **NGOs:** `id`, `name`, `address`, `latitude`, `longitude`, `contact_info`
 *   **Appointments:** `id`, `user_id`, `animal_id`, `visit_date`, `status` (Confirmed/Pending)
 
-## 💡 Pro-Tips for your NIET Project:
-*   **For the "Nearby" feature:** If you don't want to pay for Google Maps API, use OpenStreetMap (Leaflet.js). It's free and works great with Java backends.
-*   **Advanced Java Focus:** If your professors specifically asked for "Advanced Java" (meaning Servlets/JSP) rather than Spring Boot, tell the AI: *"Rewrite the backend logic using HttpServlet, RequestDispatcher, and manual JDBC connections instead of Spring Boot."*
-*   **Validation:** Don't forget to include server-side validation. For example, a user shouldn't be able to book a visit for a pet that is already "Adopted".
-d
