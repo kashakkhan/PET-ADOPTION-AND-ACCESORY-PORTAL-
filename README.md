@@ -1,4 +1,4 @@
-# Project Title: "PawConnect" – Advanced Java Pet Adoption & NGO Management System
+# Project Title: "PawConnect" – Pet Adoption & NGO Management System
 
 **Objective:** Build a full-stack web application using Java (Spring Boot / Advanced Java) that facilitates pet adoption, connects users with NGOs, and provides a geo-aware browsing experience.
 
