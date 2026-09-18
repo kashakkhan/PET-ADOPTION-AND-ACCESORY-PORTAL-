@@ -11,7 +11,7 @@
 ## 2. User Roles & Features:
 *   **Guest User:** Can browse the homepage and view a grid of animals (Dogs, Cats, Rabbits, etc.).
 *   **Registered User:**
-    *   Secure Login/Sign-up (BCrypt encryption).
+    *   Secure Login or Sign-up
     *   **Adopter Profile:** Captures identifying details, household living situation (e.g., House with Yard), allergy information, and a required Government ID upload for NGO visit verification.
     *   **Animal Detail Page:** Clicking an image opens a detailed profile (Breed, Age, Health History, NGO Name, Location).
     *   **Scheduling System:** A "Book a Visit" feature with a calendar picker to visit the NGO.
